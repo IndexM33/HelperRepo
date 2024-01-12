@@ -1,0 +1,113 @@
+// we are goint to add comments in here to ensure we remember what we need for webpack .
+
+// set up package.json npm init -y flag just says yes to all .
+
+// install webpack cli and webpack
+// npm install --save-dev webpack webpack-cli
+
+// set up a script in package to start webpack (bundle it) - "start":"webpack"
+
+// webpack always starts by looking into src folder inside the directory. it is always looking for index.js as its entry point.
+
+// correct syntax for webpack.config.js
+// module.exports = {} object.
+// indie object entry: "./src/index.js"
+// output: { filename : "thefile to output too", path: path.resolve(__dirname, "dist"),}
+//mode settings "development , production" - difference is minifying code etc which we want to do for production
+
+// important - with our scripts in our package.json we can pass different webpack config files for each script name for example :
+//"start": "webpack --config webpack.config.js"
+//"build": "webpack --config webpack.prod.js"
+//notes: this way we can have different configs used for different production methods.
+
+// ---------------LOADERS ------------------------
+
+/*
+
+syntax - 
+module:{
+  rules:[{
+    test: /\.css$/,
+    use: ['style-loader','css-loader]
+  }]
+}
+
+style loader - npm install --save-dev style-loader
+css-loader loader - npm install --save-dev css-loader
+
+
+loaders allow us to load in different formats at the moment webpack will only load our html and javascript.
+
+if we want something like jpeg, svg, css etc we need to use loaders. 
+
+they need to be installed 
+typically style-loader is what adds to our html the css or other formats turned into valid javascript formats
+
+
+
+--------------cache busting ------------------
+websites cache files that tend not to change in name to improve load times. if we do not change names when we put new code out. chances are websites might have cashed files. causing our updates not to implement on some peoples systems. 
+
+for file names we can use name.[contenthash].js
+or [name].[contenthash].js
+content hashing is great but we need to be able to dynamically add it to ourwebsite eachtime a hash has been performed. 
+
+------------plugins-----------------------------
+npm install --save-dev html-webpack-plugin
+
+htmlwebpack plugin for example helps create our html file for us (templating)
+we create a htmlwebpack plugin object and use it in our plug ins like this 
+
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+module.exports = {
+  devtool: false,
+  mode: "development",
+  entry: "./src/index.js",
+  output: {
+    filename: "main[contenthash].js",
+    path: path.resolve(__dirname, "dist"),
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./src/templates/template.html",
+      
+    }),
+
+
+----------splitting dev and prod environments -----
+we use npm install --save-dev merge-webpack
+
+this is default export so {merge} is needed
+we can create a common,dev,prod webpack .js file
+
+we can call merge and merge the items we need in common to be shared and use prod and dev values for things like dev server and minifying and hashing our code.
+
+-------------dev server----==================
+create a dev server to serve our dev start build command. 
+npm install --save-dev webpack-dev-server
+
+------clean webpack plug in -------------
+helps clean up dist folder on every run of a prod build
+
+include the clean:true flag in the output object to clean directory on rebuild.
+const path = require("path");
+
+const common = require("./webpack.common");
+const { merge } = require("webpack-merge");
+module.exports = merge(common, {
+  mode: "production",
+  entry: "./src/index.js",
+  output: {
+    filename: "main[contenthash].js",
+    path: path.resolve(__dirname, "dist"),
+    assetModuleFilename: "images/[name].[hash].[ext]",
+    clean: true,
+  },
+});
+
+
+------------html Loader----------------------
+npm install --save-dev html-loader
+*/
+
+//finished https://www.youtube.com/watch?v=MpGLUVbqoYQ&t=5491s 1 hour 33m
