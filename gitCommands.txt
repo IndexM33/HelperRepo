@@ -41,9 +41,14 @@ git reset --hard <commit code from log>
 5. check it was added type git remote -v
 
 ------------copy a repo ---------------------------
+1. create local file, run git init
 1.find a repo or make one. 
 2.copy the ssh
 3. type git clone followed by ssh 
+4. git fetch --all <fetches all branches from origin>
+5 git branch -r shows all branches from github repo
+6 create a local branch and track a remote branch 
+7 git checkout -b main origin/main 
 4.cd in and start coding. branching etc . 
 
 ------------ create branches -------------------
